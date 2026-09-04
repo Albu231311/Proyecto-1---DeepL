@@ -1,0 +1,25 @@
+{
+    "umbral_a": 0.85,
+    "umbral_b": 0.33,
+    "umbral_c": 0.23,
+    "variables_c": [
+        "monto_prom_24h",
+        "n_trans_ultima_hora",
+        "monto_max_dia",
+        "diversidad_comercios_7d",
+        "merchant_freq",
+        "channel_freq"
+    ],
+    "variables_a": [
+        "amount",
+        "monto_prom_24h",
+        "n_trans_ultima_hora",
+        "monto_max_dia",
+        "diversidad_comercios_7d",
+        "merchant_freq",
+        "channel_freq",
+        "hora_del_dia",
+        "dia_semana"
+    ],
+    "longitud_max_secuencia": 20
+}
