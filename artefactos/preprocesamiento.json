@@ -1,0 +1,125 @@
+{
+  "generador_config": {
+    "n_clientes": 3000,
+    "periodo_dias": 180,
+    "tasa_fraude_clientes": 0.08,
+    "seed": 2027
+  },
+  "particion_temporal": {
+    "train_dia_max": 119,
+    "val_dia_max": 149,
+    "test_dia_max": 179
+  },
+  "features_a": [
+    "amount",
+    "monto_prom_24h",
+    "n_trans_ultima_hora",
+    "monto_max_dia",
+    "diversidad_comercios_7d",
+    "merchant_freq",
+    "channel_freq",
+    "hora_del_dia",
+    "dia_semana"
+  ],
+  "freq_comercio_train": {
+    "0": 0.04768686155023698,
+    "1": 0.05027377903382496,
+    "2": 0.04870249344991021,
+    "3": 0.048323471400394474,
+    "4": 0.049729164826753804,
+    "5": 0.05412287674055757,
+    "6": 0.05137772675086108,
+    "7": 0.04702449292001531,
+    "8": 0.05270246401130443,
+    "9": 0.05038417380552857,
+    "10": 0.05294165268332892,
+    "11": 0.047889251965026934,
+    "12": 0.05319188083252377,
+    "13": 0.04638788306985781,
+    "14": 0.05200329712384821,
+    "15": 0.052305042833171424,
+    "16": 0.05043569136565692,
+    "17": 0.04954517354058112,
+    "18": 0.04656083487886014,
+    "19": 0.048411787217757365
+  },
+  "freq_canal_train": {
+    "0": 0.344416968412376,
+    "1": 0.3323839382966823,
+    "2": 0.32319909329094176
+  },
+  "event_cols_b": [
+    "log_amount",
+    "log_dt_prev",
+    "hora_sin",
+    "hora_cos",
+    "dow_sin",
+    "dow_cos"
+  ],
+  "normalizacion_evento_b": {
+    "mu_log_amount": 5.223475302869439,
+    "sd_log_amount": 0.7264414914907266,
+    "mu_log_dt_prev": 2.790020045677347,
+    "sd_log_dt_prev": 1.2093127368817345
+  },
+  "agg_cols_c": [
+    "monto_prom_24h",
+    "n_trans_ultima_hora",
+    "monto_max_dia",
+    "diversidad_comercios_7d",
+    "merchant_freq",
+    "channel_freq"
+  ],
+  "agg_log_cols_c": [
+    "monto_prom_24h",
+    "n_trans_ultima_hora",
+    "monto_max_dia",
+    "diversidad_comercios_7d"
+  ],
+  "normalizacion_agregados_c": {
+    "media": [
+      3.1685770154664916,
+      0.034317286912850145,
+      1.944805760779089,
+      1.471833207395106,
+      0.05010561143698021,
+      0.3335597844720046
+    ],
+    "desviacion": [
+      2.6224101435460136,
+      0.16423365484558994,
+      2.5975413248116435,
+      0.44873139639275295,
+      0.0023007225287713373,
+      0.008703582765772598
+    ]
+  },
+  "vocabulario_comercio": [
+    "supermercado",
+    "restaurante",
+    "gasolinera",
+    "farmacia",
+    "ropa",
+    "electronica",
+    "streaming",
+    "viajes",
+    "hogar",
+    "entretenimiento",
+    "salud",
+    "educacion",
+    "ferreteria",
+    "belleza",
+    "mascotas",
+    "deportes",
+    "joyeria",
+    "electrodomesticos",
+    "licoreria",
+    "otros"
+  ],
+  "vocabulario_canal": [
+    "POS",
+    "online",
+    "cajero"
+  ],
+  "longitud_max_secuencia": 20
+}
