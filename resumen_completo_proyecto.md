@@ -25,16 +25,19 @@ Para investigar esto, el equipo generó una base de datos de transacciones sint�
 Para comparar enfoques, se crearon 3 modelos distintos y se enfrentaron entre sí bajo las mismas reglas y con los mismos datos:
 
 ### Modelo A (Línea Base Tradicional)
-- **Qué usaba:** Un algoritmo tabular clásico de ensamble de árboles (HistGradientBoosting).
-- **Enfoque:** Representa al sistema antiguo del banco. Solo lee variables "agregadas" (máximos, promedios). Es completamente ciego al orden temporal en el que ocurrieron las compras.
+- **Nombre Técnico:** HistGradientBoostingClassifier (Ensamble de Árboles de Decisión).
+- **En qué se basa:** Es un modelo tabular (Machine Learning clásico). Procesa los datos como si fueran una tabla estática, sacando métricas de resumen de cada cliente (ej. *sumatoria de montos en el mes*, *número de transacciones en la última hora* o *diversidad de comercios*).
+- **Enfoque y Limitación:** Representa al sistema antiguo del banco. Como solo ve el "resumen" numérico global, es completamente ciego al **orden temporal**. Si un cliente hace 4 compras pequeñas y 1 gigante, el modelo sabe que hubo 5 compras, pero no tiene ni idea en qué orden ocurrieron.
 
 ### Modelo B (El Especialista Secuencial)
-- **Qué usaba:** Una red neuronal recurrente pura (arquitectura GRU).
-- **Enfoque:** Se le alimentó la lista "cruda" de transacciones paso a paso. No recibió ni un solo promedio ni sumatoria, tuvo que aprender los patrones de fraude empíricamente leyendo las compras en el orden en que ocurrieron.
+- **Nombre Técnico:** Red Neuronal Recurrente con arquitectura GRU (Gated Recurrent Unit).
+- **En qué se basa:** A diferencia de los árboles, este modelo procesa la información como si fuera una película paso a paso. Se le alimentó la lista "cruda" de transacciones (*monto 1 -> monto 2 -> monto 3*). Utiliza "embeddings" matemáticos para representar el comercio y canal, y usa su capa GRU como memoria para recordar qué pasó antes.
+- **Enfoque y Limitación:** Su especialidad es encontrar la "narrativa" o el ritmo en el tiempo (es buenísimo para atrapar la "escalada" de fraude). Sin embargo, al estar tan concentrado en leer el historial paso a paso, sufre de amnesia de largo plazo y pierde de vista el contexto histórico global del cliente (fracasando en transacciones aisladas como el "comercio atípico").
 
 ### Modelo C (La Apuesta del Equipo / El Híbrido)
-- **Qué usaba:** Una red GRU combinada con las variables agregadas del Modelo A.
-- **Enfoque:** El equipo pensó: *"¿Por qué elegir uno u otro? Démosle a la red neuronal la capacidad de leer la secuencia de eventos, pero al final inyectémosle el resumen histórico de las variables agregadas"*. 
+- **Nombre Técnico:** Red Neuronal Híbrida (GRU + Inyección de Variables Agregadas).
+- **En qué se basa:** Es una red neuronal construida desde cero. Utiliza exactamente la misma memoria secuencial (GRU) del Modelo B para entender el orden de las compras, pero, justo antes de dar su veredicto final, se le "inyectan" o concatenan las variables tabulares históricas del Modelo A. 
+- **Enfoque y Limitación:** El objetivo fue darle al modelo "lo mejor de dos mundos". Querían que la red entendiera el ritmo temporal inmediato (para cazar ráfagas) pero que al mismo tiempo tuviera el contexto general del cliente (para cazar transacciones raras en comercios atípicos). 
 
 ---
 
